@@ -4,3 +4,4 @@ scipy
 supabase
 cryptography
 google.generativeai
+gunicorn
