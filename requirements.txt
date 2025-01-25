@@ -1,8 +1,8 @@
 flask
 sounddevice
-scipy.io.wavfile
+scipy
 supabase
-cryptography.fernet
+cryptography
 google.generativeai
 threading
 os
