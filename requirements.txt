@@ -1,5 +1,5 @@
 flask
-sounddevice
+sounddevice==0.4.1
 scipy
 supabase
 cryptography
