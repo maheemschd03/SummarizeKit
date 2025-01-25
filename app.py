@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-import sounddevice as sd
 from scipy.io.wavfile import write
 from supabase import create_client, Client
 from cryptography.fernet import Fernet
@@ -183,6 +182,7 @@ def start():
 # Flask route to start recording
 @app.route('/start_recording', methods=['POST'])
 def start_recording():
+    import sounddevice as sd
     global is_recording, audio_data, file_name, subject, type_of_class
 
     # Get subject and type from request
