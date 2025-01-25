@@ -1,0 +1,10 @@
+flask
+sounddevice
+scipy.io.wavfile
+supabase
+cryptography.fernet
+google.generativeai
+threading
+os
+time
+base64
