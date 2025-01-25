@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Webpage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome To STORE</h1>
+    <!-- Transparent Box -->
+    <div class="transparent-box">
+        <!-- Stack of Unique Subjects in a Form -->
+        <form action="/process_subject" method="POST">
+            <ul class="subject-list">
+                {% for subject in subjects %}
+                    <li class="subject-item">
+                        <button class="subject-button" type="submit" name="selected_subject" value="{{ subject }}">{{ subject }}</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="button-container">
+        <form action="/start" method="POST">
+            <button type="submit" class="home-button">Want to Record</button>
+        </form>
+    </div>
+    <!-- Background Container -->
+    <div id="background">
+    </div>
+</body>
+</html>

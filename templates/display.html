@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Grid</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='display.css') }}">
+</head>
+<body>
+    <h1 style="text-align: center;">Class Information</h1>
+    <div class="grid-container">
+        <div class="grid-item">
+            <h3>Subject</h3>
+            <p>{{ data['subject'] }}</p>
+        </div>
+        <div class="grid-item">
+            <h3>Type</h3>
+            <p>{{ data['type'] }}</p>
+        </div>
+        <div class="grid-item">
+            <h3>Created At</h3>
+            <p>{{ data['created_at'] }}</p>
+        </div>
+        <div class="grid-item">
+            <h3>Summary</h3>
+            <p>{{ data['summary']|safe }}</p>
+        </div>
+        <div class="grid-item">
+            <h3>Attendance Report</h3>
+            <p>{{ data['attendance_report']|safe }}</p>
+        </div>
+    </div>
+    <!-- Back to Home Button -->
+    <div class="button-container">
+        <form action="/home" method="POST">
+            <button type="submit" class="home-button">Back to Home</button>
+        </form>
+    </div>
+    <div class="button-container">
+        <form action="/delete" method="POST">
+            <button type="submit" class="home-button" name="timestamp" value = {{ data['created_at'] }}> Delete this Record</button>
+        </form>
+    </div>
+</body>
+</html>

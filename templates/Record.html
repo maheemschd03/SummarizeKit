@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: url("/static/images/background5.jpg"); /* Replace with your anime-themed image path */
+            background-position: center;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 255, 204, 0.6);
+        }
+        h1 {
+            color: #00e6e6;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 230, 230, 1), 0 0 25px rgba(0, 230, 230, 0.7);
+        }
+        p {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+        input {
+            padding: 12px;
+            font-size: 1rem;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 400px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+            outline: none;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+        input:focus {
+            box-shadow: 0 0 20px rgba(0, 255, 204, 1);
+            transform: scale(1.05);
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            margin: 10px 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #00ffcc, #0066ff);
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 102, 255, 0.6);
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        button:hover:not(:disabled) {
+            background: linear-gradient(45deg, #0066ff, #00ffcc);
+            transform: scale(1.05);
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+            max-width: 600px;
+            margin: 30px auto;
+            color: #00ffcc;
+        }
+        #result h2 {
+            color: #00e6e6;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 230, 230, 1);
+        }
+        .home-button {
+            background: linear-gradient(45deg, #00e6e6, #1e90ff);
+            color: #000;
+        }
+        .home-button:hover {
+            background: linear-gradient(45deg, #1e90ff, #00e6e6);
+        }
+    </style>
+</head>
+<body>
+    <h1>Audio Recording and Processing</h1>
+    <p>Enter the subject and type of the class:</p>
+
+    <!-- Subject and Type inputs -->
+    <input type="text" id="subject" placeholder="Enter Subject" required><br>
+    <input type="text" id="type" placeholder="Enter Type of Class" required><br>
+
+    <p>Click the button below to start or stop recording your class audio:</p>
+    <button id="startRecordingButton">Start Recording</button>
+    <button id="stopRecordingButton" disabled>Stop Recording</button>
+
+    <div id="result">
+        <h2>Summary:</h2>
+        <p id="summary">No data yet.</p>
+        <h2>Attendance Report:</h2>
+        <p id="attendanceReport">No data yet.</p>
+    </div>
+    <div class="button-container">
+        <form action="/home" method="POST">
+            <button type="submit" class="home-button">Back to Home</button>
+        </form>
+    </div>
+
+    <script>
+        const startRecordingButton = document.getElementById("startRecordingButton");
+        const stopRecordingButton = document.getElementById("stopRecordingButton");
+
+        startRecordingButton.onclick = async function() {
+            const subject = document.getElementById("subject").value;
+            const type = document.getElementById("type").value;
+
+            if (!subject || !type) {
+                alert("Please enter both subject and type!");
+                return;
+            }
+
+            const response = await fetch('/start_recording', {
+                method: 'POST',
+                body: JSON.stringify({subject: subject, type: type}),
+                headers: {'Content-Type': 'application/json'}
+            });
+            const result = await response.json();
+            if (result.message === "Recording started.") {
+                startRecordingButton.disabled = true;
+                stopRecordingButton.disabled = false;
+            }
+            alert(result.message);
+        };
+
+        stopRecordingButton.onclick = async function() {
+            const response = await fetch('/stop_recording', { method: 'POST' });
+            const result = await response.json();
+            if (result.message === "Recording stopped. Processing file.") {
+                stopRecordingButton.disabled = true;
+                await processAudio();
+            }
+            alert(result.message);
+        };
+
+        async function processAudio() {
+            const response = await fetch('/process_audio', { method: 'POST' });
+            const result = await response.json();
+
+            document.getElementById('summary').textContent = result.summary;
+            document.getElementById('attendanceReport').textContent = result.attendance_report;
+        }
+    </script>
+</body>
+</html>

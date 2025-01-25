@@ -1,0 +1,117 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f9;  /* Fallback background color */
+    position: relative;
+    overflow: hidden; /* Ensures the background image stays within the viewport */
+}
+
+/* Create a container for the background image */
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("/static/images/background5.jpg") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0;  /* Start with the background being invisible */
+    animation: fadeInBackground 0s ease-in-out forwards;  /* Apply fade-in effect */
+    z-index: -1;  /* Ensure the background stays behind other content */
+}
+
+/* Background fade-in animation */
+@keyframes fadeInBackground {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    color:aliceblue;
+}
+
+/* Transparent Box Styling */
+.transparent-box {
+    width: 800px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+    color: #fff; /* Text color */
+    border: 2px solid rgba(255, 255, 255, 0.7); /* Light border with transparency */
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px; /* Optional: to round the corners */
+    border: none;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    max-height: 400px; /* Set a maximum height for scrolling */
+    margin-left: 20%;
+    margin-top: 10%;
+}
+
+/* Stack of Dates (List Styling) */
+.subject-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+/* Date Item Styling */
+.subject-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background for each date */
+    border-radius: 5px; /* Round the corners of each date */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Hover Effect for Date Items */
+.subject-item:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Change background color on hover */
+    transform: scale(1.1); /* Slightly increase the size on hover */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
+}
+
+.subject-button{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    cursor: pointer;
+    color:aliceblue;
+}
+
+
+/* Record Button */
+.button-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.home-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color:aliceblue;
+    background-color:black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color:aliceblue;
+    color: black;
+}
