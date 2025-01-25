@@ -4,7 +4,6 @@ scipy
 supabase
 cryptography
 google.generativeai
-threading
 os
 time
 base64
